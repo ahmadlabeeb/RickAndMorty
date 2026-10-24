@@ -1,0 +1,4 @@
+#include "Common.xcconfig"
+
+// Production Environment Configuration
+API_BASE_URL = https:$(SLASH)$(SLASH)rickandmortyapi.com$(SLASH)api
