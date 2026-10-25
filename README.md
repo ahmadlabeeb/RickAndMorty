@@ -1,26 +1,22 @@
 # Rick & Morty – iOS Technical Assessment
 
-A SwiftUI app to browse Rick & Morty characters (paginated, searchable, filterable) and view details with lazily loaded episodes. Built with Swift 6, iOS 18, MVVM + Repository pattern, Swift Concurrency, SwiftData and a custom image cache. **No third-party dependencies.**
+A SwiftUI app to browse Rick & Morty characters (paginated, searchable, filterable) and view details with lazily loaded episodes. Built with Swift 6, iOS 26, MVVM + Repository pattern, Swift Concurrency, SwiftData and a custom image cache. **No third-party dependencies.**
 
 ## Setup
 
 | Requirement | Version |
 |---|---|
-| Xcode | 16.0 or later (stable) |
-| iOS deployment target | 18.0 |
-| Swift | 6.0 (strict concurrency / Swift 6 language mode) |
+| Xcode | 27.1 or later (stable) |
+| iOS deployment target | 26.2 |
+| Swift | 6.4 (strict concurrency / Swift 6 language mode) |
 
-The Xcode project is generated from `project.yml` with [XcodeGen](https://github.com/yonaskolb/XcodeGen), so there are no `.pbxproj` merge conflicts.
+Open `RickAndMorty.xcodeproj` in Xcode:
 
 ```bash
-brew install xcodegen      # only dependency installation step
-xcodegen generate          # creates RickAndMorty.xcodeproj
 open RickAndMorty.xcodeproj
 ```
 
-Then pick an iOS 18 simulator and press **⌘R** to run or **⌘U** to run the tests. No API key is needed.
-
-> Prefer not to use XcodeGen? Create a new iOS App project (SwiftUI, Swift 6, iOS 18), drag the `RickAndMorty/` folder into it, and add a Unit Test target containing `RickAndMortyTests/`.
+Then pick an iOS simulator (iOS 26.2 or later) and press **⌘R** to run or **⌘U** to run the tests. No API key is needed.
 
 ## Architecture
 
