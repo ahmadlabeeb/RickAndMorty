@@ -42,6 +42,13 @@ struct URLSessionAPIClient: APIClient {
 
         let (data, response) = try await perform(request)
 
+        NetworkLogger.logResponse(
+            endpoint: endpoint,
+            url: url,
+            response: response,
+            data: data
+        )
+
         switch response.statusCode {
         case 200..<300: break
         case 404: throw NetworkError.notFound

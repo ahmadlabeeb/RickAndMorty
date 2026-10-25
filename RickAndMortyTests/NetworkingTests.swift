@@ -68,6 +68,50 @@ struct NetworkingTests {
         await #expect(throws: NetworkError.timeout) { let _: Probe = try await client.send(Endpoint(path: "x")) }
     }
 
+    // MARK: NetworkLogger
+
+    @Test func networkLoggerFormatsPrettyJSON() {
+        let json = #"{"name":"Rick","status":"Alive"}"#
+        let data = Data(json.utf8)
+        let url = URL(string: "https://rickandmortyapi.com/api/character/1")!
+        let params: [String: Any] = ["page": 1]
+
+        let message = NetworkLogger.formatMessage(
+            url: url,
+            parameters: params,
+            statusCode: 200,
+            data: data
+        )
+
+        #expect(message.contains("URL: https://rickandmortyapi.com/api/character/1"))
+        #expect(message.contains("\"page\": 1") || message.contains("\"page\":1"))
+        #expect(message.contains("Response Code: 200"))
+        #expect(message.contains("\"name\" : \"Rick\"") || message.contains("\"name\": \"Rick\""))
+        #expect(message.contains("\"status\" : \"Alive\"") || message.contains("\"status\": \"Alive\""))
+    }
+
+    @Test func networkLoggerHandlesNonJSONOrEmptyData() {
+        let emptyMessage = NetworkLogger.formatMessage(
+            url: nil,
+            parameters: nil,
+            statusCode: 500,
+            data: Data()
+        )
+        #expect(emptyMessage.contains("URL: N/A"))
+        #expect(emptyMessage.contains("Parameters: None"))
+        #expect(emptyMessage.contains("Response Code: 500"))
+        #expect(emptyMessage.contains("(Empty)"))
+
+        let textMessage = NetworkLogger.formatMessage(
+            url: URL(string: "https://example.com")!,
+            parameters: [:],
+            statusCode: 502,
+            data: Data("Gateway Error".utf8)
+        )
+        #expect(textMessage.contains("Parameters: None"))
+        #expect(textMessage.contains("Gateway Error"))
+    }
+
     // MARK: ImageLoader
 
     @Test func imageLoaderCachesInMemory() async throws {
