@@ -53,10 +53,10 @@ actor DefaultEpisodeRepository: EpisodeRepository {
         // Only request what we don't already have, in ONE batched call.
         let missing = unique.filter { cache[$0] == nil }
         if !missing.isEmpty {
-//            let dto: EpisodeListDTO = try await client.send(.episodes(ids: missing))
-//            for episode in dto.episodes {
-//                cache[episode.id] = Episode(dto: episode)
-//            }
+            let dto: EpisodeListDTO = try await client.send(.episodes(ids: missing))
+            for episode in dto.episodes {
+                cache[episode.id] = Episode(dto: episode)
+            }
         }
         return unique.compactMap { cache[$0] }
     }
